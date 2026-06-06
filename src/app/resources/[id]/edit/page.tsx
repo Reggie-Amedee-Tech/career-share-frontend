@@ -27,14 +27,14 @@ export default async function EditResourcePage({
 
   return (
     <RequireAuth>
-      <div className="mx-auto w-full max-w-2xl px-6 py-12">
+      <div className="mx-auto w-full max-w-2xl px-4 py-8 sm:px-6 sm:py-12">
         <Link
           href={`/resources/${resource.id}`}
           className="mb-6 inline-block text-sm text-muted transition-colors hover:text-accent"
         >
           &larr; Back to Resource
         </Link>
-        <h1 className="mb-8 text-3xl font-semibold tracking-tight text-foreground">
+        <h1 className="mb-6 text-2xl font-semibold tracking-tight text-foreground sm:mb-8 sm:text-3xl">
           Edit Resource
         </h1>
         <div className="rounded-xl bg-surface p-6 shadow-sm">

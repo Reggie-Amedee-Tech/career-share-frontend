@@ -42,7 +42,7 @@ export default function ResourceFilter() {
             : ""
         }
         onChange={handleChange}
-        className="rounded-lg border border-border bg-surface px-4 py-2.5 text-sm outline-none focus:border-accent sm:min-w-52"
+        className="w-full rounded-lg border border-border bg-surface px-4 py-2.5 text-sm outline-none focus:border-accent sm:min-w-52 sm:w-auto"
       >
         <option value="">All types</option>
         {RESOURCE_CATEGORIES.map((value) => (

@@ -43,10 +43,10 @@ export default async function ResourcesPage({
   }
 
   return (
-    <div className="mx-auto w-full max-w-3xl px-6 py-12">
-      <div className="mb-8 flex items-center justify-between">
+    <div className="mx-auto w-full max-w-3xl px-4 py-8 sm:px-6 sm:py-12">
+      <div className="mb-6 flex flex-col gap-4 sm:mb-8 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-3xl font-semibold tracking-tight text-foreground">
+          <h1 className="text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
             Resources
           </h1>
           <p className="mt-1 text-muted">
@@ -55,7 +55,7 @@ export default async function ResourcesPage({
         </div>
         <Link
           href="/resources/new"
-          className="rounded-full bg-primary px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-primary-hover"
+          className="w-full rounded-full bg-primary px-5 py-2.5 text-center text-sm font-medium text-white transition-colors hover:bg-primary-hover sm:w-auto"
         >
           Add Resource
         </Link>
@@ -104,8 +104,8 @@ export default async function ResourcesPage({
         <ul className="flex flex-col gap-4">
           {resources.map((resource) => (
             <li key={resource.id}>
-              <div className="rounded-xl border border-border bg-surface p-5 shadow-sm">
-                <div className="flex items-start justify-between gap-4">
+              <div className="rounded-xl border border-border bg-surface p-4 shadow-sm sm:p-5">
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
                   <Link
                     href={`/resources/${resource.id}`}
                     className="min-w-0 flex-1 rounded-lg transition-colors hover:bg-background"
@@ -125,13 +125,15 @@ export default async function ResourcesPage({
                       {resource.url}
                     </p>
                   </Link>
-                  <ResourceVoteButtons
-                    resourceId={resource.id}
-                    initialUpvoteCount={resource.upvoteCount}
-                    initialDownvoteCount={resource.downvoteCount}
-                    initialUserVote={resource.userVote}
-                    compact
-                  />
+                  <div className="shrink-0 self-start">
+                    <ResourceVoteButtons
+                      resourceId={resource.id}
+                      initialUpvoteCount={resource.upvoteCount}
+                      initialDownvoteCount={resource.downvoteCount}
+                      initialUserVote={resource.userVote}
+                      compact
+                    />
+                  </div>
                 </div>
               </div>
             </li>

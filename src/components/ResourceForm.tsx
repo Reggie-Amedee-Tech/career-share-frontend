@@ -147,11 +147,11 @@ export default function ResourceForm({
         />
       </div>
 
-      <div className="flex gap-3">
+      <div className="flex flex-col gap-3 sm:flex-row">
         <button
           type="submit"
           disabled={submitting}
-          className="rounded-full bg-primary px-6 py-2.5 text-sm font-medium text-white transition-colors hover:bg-primary-hover disabled:opacity-50"
+          className="w-full rounded-full bg-primary px-6 py-2.5 text-sm font-medium text-white transition-colors hover:bg-primary-hover disabled:opacity-50 sm:w-auto"
         >
           {submitting
             ? "Saving..."
@@ -162,7 +162,7 @@ export default function ResourceForm({
         <button
           type="button"
           onClick={() => router.back()}
-          className="rounded-full border border-border px-6 py-2.5 text-sm font-medium transition-colors hover:bg-background"
+          className="w-full rounded-full border border-border px-6 py-2.5 text-sm font-medium transition-colors hover:bg-background sm:w-auto"
         >
           Cancel
         </button>

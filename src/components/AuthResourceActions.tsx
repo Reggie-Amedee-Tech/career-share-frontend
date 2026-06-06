@@ -20,7 +20,7 @@ export default function AuthResourceActions({
   }
 
   return (
-    <div className="flex shrink-0 gap-2">
+    <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row sm:flex-wrap">
       <Link
         href={`/resources/${resourceId}/edit`}
         className="rounded-full border border-border px-4 py-2 text-sm font-medium transition-colors hover:bg-background"

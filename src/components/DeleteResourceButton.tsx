@@ -35,12 +35,12 @@ export default function DeleteResourceButton({
 
   if (confirming) {
     return (
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap">
         <p className="text-sm text-muted">
           Delete &ldquo;{resourceTitle}&rdquo;? This cannot be undone.
         </p>
         {error && <p className="text-sm text-red-600">{error}</p>}
-        <div className="flex gap-2">
+        <div className="flex flex-col gap-2 sm:flex-row">
           <button
             onClick={handleDelete}
             disabled={deleting}
