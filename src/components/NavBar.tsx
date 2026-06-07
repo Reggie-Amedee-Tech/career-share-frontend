@@ -94,12 +94,12 @@ export default function NavBar() {
             <span className="text-sm text-muted">...</span>
           ) : user ? (
             <>
-              <span className="text-sm text-muted">
-                {user.fName} {user.lName}
-              </span>
               <button onClick={handleLogout} className={buttonClass}>
                 Sign Out
               </button>
+              <span className="text-sm text-muted">
+                {user.fName} {user.lName}
+              </span>
             </>
           ) : (
             <>
@@ -152,9 +152,6 @@ export default function NavBar() {
               <span className="px-3 py-2 text-sm text-muted">...</span>
             ) : user ? (
               <>
-                <p className="px-3 py-1 text-sm text-muted">
-                  {user.fName} {user.lName}
-                </p>
                 <Link
                   href="/resources/new"
                   className={`${primaryButtonClass} text-center`}
@@ -168,6 +165,9 @@ export default function NavBar() {
                 >
                   Sign Out
                 </button>
+                <p className="px-3 py-1 text-sm text-muted">
+                  {user.fName} {user.lName}
+                </p>
               </>
             ) : (
               <div className="flex flex-col gap-2">
