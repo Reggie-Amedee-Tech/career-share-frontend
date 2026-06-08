@@ -37,6 +37,14 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 
 ## Project Description
 
+### How to deploy
+
+Please clone these two repos [Front End](https://github.com/Reggie-Amedee-Tech/career-share-frontend) and [Back end](https://github.com/Reggie-Amedee-Tech/career-share-backend).
+
+Add a .env variable in BOTH project roots.
+
+Once you do this, please reach out to me to get the necessary environment variables so you can effectively run the app.
+
 ### Career Share
 
 **Career Share** is intended to be a community based job board where users can share resources related to career development and job placements.
