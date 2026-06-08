@@ -25,6 +25,8 @@ export interface Resource {
   url: string;
   userId: string | null;
   category: ResourceCategory[];
+  createdAt: string;
+  updatedAt: string;
   upvoteCount: number;
   downvoteCount: number;
   userVote: "up" | "down" | null;
