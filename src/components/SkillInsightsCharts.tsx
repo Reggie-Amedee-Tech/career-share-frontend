@@ -16,13 +16,7 @@ import JobLocationMap from "@/components/JobLocationMap";
 import SkillHeatmapChart from "@/components/SkillHeatmapChart";
 import type { SkillInsightsResponse } from "@/types/insights";
 
-const CHART_COLORS = [
-  "#588157",
-  "#3a5a40",
-  "#a3b18a",
-  "#344e41",
-  "#6b8f71",
-];
+const CHART_COLORS = ["#588157", "#3a5a40", "#a3b18a", "#344e41", "#6b8f71"];
 
 interface SkillInsightsChartsProps {
   insights: SkillInsightsResponse;
@@ -95,7 +89,9 @@ function InsightsSummary({ insights }: { insights: SkillInsightsResponse }) {
           <p className="text-xs font-medium uppercase tracking-wide text-muted">
             {card.label}
           </p>
-          <p className="mt-2 text-xl font-semibold text-foreground">{card.value}</p>
+          <p className="mt-2 text-xl font-semibold text-foreground">
+            {card.value}
+          </p>
           <p className="mt-1 text-sm text-muted">{card.detail}</p>
         </article>
       ))}
@@ -108,7 +104,9 @@ function OverallSkillsTooltip({
   payload,
 }: {
   active?: boolean;
-  payload?: Array<{ payload: { skill: string; count: number; percentage: number } }>;
+  payload?: Array<{
+    payload: { skill: string; count: number; percentage: number };
+  }>;
 }) {
   if (!active || !payload?.[0]) {
     return null;
@@ -120,8 +118,8 @@ function OverallSkillsTooltip({
     <div className="rounded-lg border border-border bg-surface px-3 py-2 text-sm shadow-sm">
       <p className="font-medium text-foreground">{data.skill}</p>
       <p className="text-muted">
-        {data.count} posting{data.count === 1 ? "" : "s"} · {data.percentage}% of analyzed
-        roles
+        {data.count} posting{data.count === 1 ? "" : "s"} · {data.percentage}%
+        of analyzed roles
       </p>
     </div>
   );
@@ -156,7 +154,10 @@ function LocationSkillsTooltip({
       </p>
       <ul className="space-y-1">
         {payload.map((entry) => (
-          <li key={entry.name} className="flex items-center justify-between gap-4">
+          <li
+            key={entry.name}
+            className="flex items-center justify-between gap-4"
+          >
             <span className="flex items-center gap-2 text-foreground">
               <span
                 className="inline-block h-2.5 w-2.5 rounded-full"
@@ -172,7 +173,9 @@ function LocationSkillsTooltip({
   );
 }
 
-export default function SkillInsightsCharts({ insights }: SkillInsightsChartsProps) {
+export default function SkillInsightsCharts({
+  insights,
+}: SkillInsightsChartsProps) {
   const [yAxisWidth, setYAxisWidth] = useState(110);
 
   useEffect(() => {
@@ -192,7 +195,9 @@ export default function SkillInsightsCharts({ insights }: SkillInsightsChartsPro
     percentage: entry.percentage,
   }));
 
-  const topSkillsForComparison = insights.topSkills.slice(0, 5).map((entry) => entry.skill);
+  const topSkillsForComparison = insights.topSkills
+    .slice(0, 5)
+    .map((entry) => entry.skill);
   const locationData = insights.skillsByLocation.map((entry) => {
     const row: Record<string, string | number> = {
       location: entry.location,
@@ -255,8 +260,8 @@ export default function SkillInsightsCharts({ insights }: SkillInsightsChartsPro
           </h2>
           <p className="mt-1 text-sm text-muted">
             {insights.name} · Skills mentioned most often across{" "}
-            {insights.totalJobsAnalyzed.toLocaleString()} open {insights.role} and
-            related role{insights.totalJobsAnalyzed === 1 ? "" : "s"} across{" "}
+            {insights.totalJobsAnalyzed.toLocaleString()} open {insights.role}{" "}
+            and related role{insights.totalJobsAnalyzed === 1 ? "" : "s"} across{" "}
             {analysisScopeLabel} from tracked job boards (
             {insights.totalBoardJobs.toLocaleString()} total postings
             {insights.totalRoleMatches > insights.totalJobsAnalyzed
@@ -286,17 +291,17 @@ export default function SkillInsightsCharts({ insights }: SkillInsightsChartsPro
                   width={yAxisWidth}
                   tick={{ fill: "#344e41", fontSize: 11 }}
                 />
-              <Tooltip content={<OverallSkillsTooltip />} />
-              <Bar dataKey="count" radius={[0, 4, 4, 0]}>
-                {overallData.map((entry, index) => (
-                  <Cell
-                    key={entry.skill}
-                    fill={CHART_COLORS[index % CHART_COLORS.length]}
-                  />
-                ))}
-              </Bar>
-            </BarChart>
-          </ResponsiveContainer>
+                <Tooltip content={<OverallSkillsTooltip />} />
+                <Bar dataKey="count" radius={[0, 4, 4, 0]}>
+                  {overallData.map((entry, index) => (
+                    <Cell
+                      key={entry.skill}
+                      fill={CHART_COLORS[index % CHART_COLORS.length]}
+                    />
+                  ))}
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
           </div>
         </div>
 
@@ -309,7 +314,8 @@ export default function SkillInsightsCharts({ insights }: SkillInsightsChartsPro
               <span className="font-medium text-foreground">{entry.skill}</span>
               <span className="text-muted">
                 {" "}
-                · {entry.count} mention{entry.count === 1 ? "" : "s"} ({entry.percentage}
+                · {entry.count} mention{entry.count === 1 ? "" : "s"} (
+                {entry.percentage}
                 %)
               </span>
             </li>
@@ -324,8 +330,9 @@ export default function SkillInsightsCharts({ insights }: SkillInsightsChartsPro
               Skill mix by hiring market
             </h2>
             <p className="mt-1 text-sm text-muted">
-              Compare how often the top skills show up in each active hiring location.
-              Taller bars mean more postings in that city mention the skill.
+              Compare how often the top skills show up in each active hiring
+              location. Taller bars mean more postings in that city mention the
+              skill.
             </p>
           </div>
 
@@ -345,18 +352,21 @@ export default function SkillInsightsCharts({ insights }: SkillInsightsChartsPro
                     textAnchor="end"
                     height={70}
                   />
-                  <YAxis allowDecimals={false} tick={{ fill: "#344e41", fontSize: 11 }} />
+                  <YAxis
+                    allowDecimals={false}
+                    tick={{ fill: "#344e41", fontSize: 11 }}
+                  />
                   <Tooltip content={<LocationSkillsTooltip />} />
                   <Legend wrapperStyle={{ fontSize: 11, lineHeight: "16px" }} />
-                {topSkillsForComparison.map((skill, index) => (
-                  <Bar
-                    key={skill}
-                    dataKey={skill}
-                    name={skill}
-                    fill={CHART_COLORS[index % CHART_COLORS.length]}
-                    radius={[4, 4, 0, 0]}
-                  />
-                ))}
+                  {topSkillsForComparison.map((skill, index) => (
+                    <Bar
+                      key={skill}
+                      dataKey={skill}
+                      name={skill}
+                      fill={CHART_COLORS[index % CHART_COLORS.length]}
+                      radius={[4, 4, 0, 0]}
+                    />
+                  ))}
                 </BarChart>
               </ResponsiveContainer>
             </div>
