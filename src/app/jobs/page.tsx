@@ -20,7 +20,8 @@ function JobsPageFallback() {
           Find Jobs
         </h1>
         <p className="mt-1 text-muted">
-          Search open roles from Greenhouse job boards by keyword, skills, and location
+          Search open roles from Greenhouse job boards by keyword, skills, and
+          location
         </p>
       </div>
       <JobsListShimmer />
@@ -39,7 +40,10 @@ function JobsContent() {
     1,
     Number.parseInt(searchParams.get("radiusMiles") ?? "50", 10) || 50,
   );
-  const page = Math.max(1, Number.parseInt(searchParams.get("page") ?? "1", 10) || 1);
+  const page = Math.max(
+    1,
+    Number.parseInt(searchParams.get("page") ?? "1", 10) || 1,
+  );
   const filtersKey = `${search}|${skills}|${nearMe}|${location}|${radiusMiles}|${page}`;
 
   const [result, setResult] = useState<{
@@ -51,15 +55,17 @@ function JobsContent() {
     limit: number;
     totalPages: number;
   } | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<{
+    key: string;
+    message: string;
+  } | null>(null);
 
+  const activeError = error?.key === filtersKey ? error.message : null;
   const hasFilters = Boolean(search || skills || nearMe || location);
-  const loading = !result || result.key !== filtersKey;
+  const loading = (!result || result.key !== filtersKey) && !activeError;
   const jobs = result?.key === filtersKey ? result.jobs : [];
-  const totalBoardJobs =
-    result?.key === filtersKey ? result.totalBoardJobs : 0;
-  const totalMatches =
-    result?.key === filtersKey ? result.totalMatches : 0;
+  const totalBoardJobs = result?.key === filtersKey ? result.totalBoardJobs : 0;
+  const totalMatches = result?.key === filtersKey ? result.totalMatches : 0;
   const currentPage = result?.key === filtersKey ? result.page : page;
   const pageLimit = result?.key === filtersKey ? result.limit : 10;
   const totalPages =
@@ -103,7 +109,11 @@ function JobsContent() {
         if (cancelled) {
           return;
         }
-        setError(err instanceof Error ? err.message : "Failed to load jobs");
+        setError({
+          key: filtersKey,
+          message:
+            err instanceof Error ? err.message : "Failed to load jobs",
+        });
       });
 
     return () => {
@@ -155,7 +165,8 @@ function JobsContent() {
           Find Jobs
         </h1>
         <p className="mt-1 text-muted">
-          Search open roles from Greenhouse job boards by keyword, skills, and location
+          Search open roles from Greenhouse job boards by keyword, skills, and
+          location
         </p>
       </div>
 
@@ -165,13 +176,13 @@ function JobsContent() {
 
       {loading && <JobsListShimmer />}
 
-      {error && (
+      {activeError && (
         <p className="mb-6 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
-          {error}
+          {activeError}
         </p>
       )}
 
-      {!loading && !error && jobs.length === 0 ? (
+      {!loading && !activeError && jobs.length === 0 ? (
         <div className="rounded-xl border border-dashed border-border bg-surface px-6 py-16 text-center">
           <p className="text-muted">
             {hasFilters
@@ -189,7 +200,7 @@ function JobsContent() {
         </div>
       ) : null}
 
-      {!loading && !error && jobs.length > 0 ? (
+      {!loading && !activeError && jobs.length > 0 ? (
         <>
           <p className="mb-4 break-words text-sm text-muted">
             {describeResultSummary()}

@@ -4,7 +4,7 @@ import type {
   ResourceInput,
   ResourceUpdateInput,
 } from "@/types/resource";
-import type { JobFilters, JobsResponse } from "@/types/job";
+import type { Job, JobFilters, JobsResponse } from "@/types/job";
 import type { SkillInsightsResponse } from "@/types/insights";
 import type {
   DiscoveryAnswers,
@@ -73,6 +73,13 @@ export function updateResource(
 
 export function deleteResource(id: string): Promise<Resource> {
   return request<Resource>(`/resources/${id}`, { method: "DELETE" });
+}
+
+export function getJob(
+  boardToken: string,
+  jobId: number,
+): Promise<{ job: Job }> {
+  return request<{ job: Job }>(`/api/jobs/${boardToken}/${jobId}`);
 }
 
 export function getJobs(filters?: JobFilters): Promise<JobsResponse> {
