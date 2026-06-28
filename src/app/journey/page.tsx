@@ -7,6 +7,10 @@ import JourneyDiscoveryWizard, {
   type JourneyDiscoveryResult,
 } from "@/components/JourneyDiscoveryWizard";
 import JourneyForm from "@/components/JourneyForm";
+import {
+  JourneyInsightsShimmer,
+  JourneySidebarShimmer,
+} from "@/components/JourneyShimmer";
 import SkillInsightsCharts from "@/components/SkillInsightsCharts";
 import {
   createJourney,
@@ -208,7 +212,7 @@ function JourneyContent() {
           </div>
 
           {loadingJourneys ? (
-            <p className="text-sm text-muted">Loading journeys...</p>
+            <JourneySidebarShimmer />
           ) : journeys.length === 0 ? (
             <p className="rounded-lg border border-dashed border-border px-4 py-6 text-sm text-muted">
               No journeys yet. Create one to start tracking skill demand.
@@ -306,7 +310,7 @@ function JourneyContent() {
               />
 
               {loadingInsights ? (
-                <p className="text-sm text-muted">Analyzing open roles for skill demand...</p>
+                <JourneyInsightsShimmer />
               ) : null}
 
               {!loadingInsights && insights ? (

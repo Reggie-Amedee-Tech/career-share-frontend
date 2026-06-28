@@ -6,10 +6,27 @@ import { useSearchParams } from "next/navigation";
 import RequireAuth from "@/components/RequireAuth";
 import JobPagination from "@/components/JobPagination";
 import JobCard from "@/components/JobCard";
+import { JobsListShimmer } from "@/components/JobCardShimmer";
 import JobSearchForm from "@/components/JobSearchForm";
 import { getJobs } from "@/lib/api";
 import type { Job } from "@/types/job";
 import { useAuth } from "@/context/AuthContext";
+
+function JobsPageFallback() {
+  return (
+    <div className="mx-auto w-full max-w-3xl px-4 py-8 sm:px-6 sm:py-12">
+      <div className="mb-6 sm:mb-8">
+        <h1 className="text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
+          Find Jobs
+        </h1>
+        <p className="mt-1 text-muted">
+          Search open roles from Greenhouse job boards by keyword, skills, and location
+        </p>
+      </div>
+      <JobsListShimmer />
+    </div>
+  );
+}
 
 function JobsContent() {
   const { user } = useAuth();
@@ -146,9 +163,7 @@ function JobsContent() {
         <JobSearchForm />
       </div>
 
-      {loading && (
-        <p className="text-sm text-muted">Loading job postings...</p>
-      )}
+      {loading && <JobsListShimmer />}
 
       {error && (
         <p className="mb-6 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
@@ -216,7 +231,7 @@ function JobsContent() {
 export default function JobsPage() {
   return (
     <RequireAuth>
-      <Suspense fallback={<p className="p-8 text-sm text-muted">Loading...</p>}>
+      <Suspense fallback={<JobsPageFallback />}>
         <JobsContent />
       </Suspense>
     </RequireAuth>
