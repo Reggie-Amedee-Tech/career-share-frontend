@@ -20,7 +20,7 @@ export default function LoginForm() {
 
     try {
       await login({ email, password });
-      router.push("/");
+      router.push("/journey");
       router.refresh();
     } catch (err) {
       setError(err instanceof Error ? err.message : "Login failed");

@@ -16,7 +16,8 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Career Share",
-  description: "Discover and share career resources with the community",
+  description:
+    "Map your career path, discover in-demand skills, find jobs, and share resources with the community.",
 };
 
 export const viewport: Viewport = {

@@ -74,16 +74,22 @@ export default function NavBar() {
           Career Share
         </Link>
 
-        <div className="hidden items-center gap-6 md:flex">
+        <div className="hidden items-center gap-4 lg:flex lg:gap-6">
           <Link href="/" className={navLinkClass}>
             Home
           </Link>
           <Link href="/resources" className={navLinkClass}>
             Resources
           </Link>
+          <Link href="/jobs" className={navLinkClass}>
+            Jobs
+          </Link>
+          <Link href="/journey" className={navLinkClass}>
+            My Journey
+          </Link>
         </div>
 
-        <div className="hidden items-center gap-3 md:flex">
+        <div className="hidden shrink-0 items-center gap-2 lg:flex lg:gap-3">
           {user && (
             <Link href="/resources/new" className={primaryButtonClass}>
               Add Resource
@@ -97,7 +103,7 @@ export default function NavBar() {
               <button onClick={handleLogout} className={buttonClass}>
                 Sign Out
               </button>
-              <span className="text-sm text-muted">
+              <span className="max-w-32 truncate text-sm text-muted xl:max-w-none">
                 {user.fName} {user.lName}
               </span>
             </>
@@ -116,7 +122,7 @@ export default function NavBar() {
         <button
           type="button"
           onClick={() => setMenuOpen((open) => !open)}
-          className="inline-flex items-center justify-center rounded-lg border border-border p-2 text-foreground transition-colors hover:bg-background md:hidden"
+          className="inline-flex items-center justify-center rounded-lg border border-border p-2 text-foreground transition-colors hover:bg-background lg:hidden"
           aria-expanded={menuOpen}
           aria-controls="mobile-nav-menu"
           aria-label={menuOpen ? "Close menu" : "Open menu"}
@@ -128,7 +134,7 @@ export default function NavBar() {
       {menuOpen && (
         <div
           id="mobile-nav-menu"
-          className="border-t border-border md:hidden"
+          className="border-t border-border lg:hidden"
         >
           <div className="flex flex-col gap-1 px-4 py-4 sm:px-6">
             <Link
@@ -144,6 +150,20 @@ export default function NavBar() {
               onClick={closeMenu}
             >
               Resources
+            </Link>
+            <Link
+              href="/jobs"
+              className="rounded-lg px-3 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-background"
+              onClick={closeMenu}
+            >
+              Jobs
+            </Link>
+            <Link
+              href="/journey"
+              className="rounded-lg px-3 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-background"
+              onClick={closeMenu}
+            >
+              My Journey
             </Link>
 
             <div className="my-2 border-t border-border" />

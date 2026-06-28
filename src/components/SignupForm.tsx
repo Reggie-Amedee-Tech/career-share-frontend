@@ -12,6 +12,11 @@ export default function SignupForm() {
   const [lName, setLName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [addressLine1, setAddressLine1] = useState("");
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("");
+  const [zipCode, setZipCode] = useState("");
+  const [country, setCountry] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
 
@@ -21,8 +26,18 @@ export default function SignupForm() {
     setSubmitting(true);
 
     try {
-      await signup({ fName, lName, email, password });
-      router.push("/");
+      await signup({
+        fName,
+        lName,
+        email,
+        password,
+        addressLine1,
+        city,
+        state,
+        zipCode,
+        country,
+      });
+      router.push("/journey");
       router.refresh();
     } catch (err) {
       setError(err instanceof Error ? err.message : "Signup failed");
@@ -93,6 +108,109 @@ export default function SignupForm() {
           className="rounded-lg border border-border bg-surface px-4 py-2.5 text-sm outline-none focus:border-accent"
           placeholder="you@example.com"
         />
+      </div>
+
+      <div className="border-t border-border pt-2">
+        <h2 className="text-sm font-semibold text-foreground">Your address</h2>
+        <p className="mt-1 text-xs text-muted">
+          Used to match you with nearby job postings.
+        </p>
+      </div>
+
+      <div className="flex flex-col gap-2">
+        <label
+          htmlFor="addressLine1"
+          className="text-sm font-medium text-foreground"
+        >
+          Street address
+        </label>
+        <input
+          id="addressLine1"
+          type="text"
+          required
+          autoComplete="address-line1"
+          value={addressLine1}
+          onChange={(e) => setAddressLine1(e.target.value)}
+          className="rounded-lg border border-border bg-surface px-4 py-2.5 text-sm outline-none focus:border-accent"
+          placeholder="123 Main St"
+        />
+      </div>
+
+      <div className="grid gap-4 sm:grid-cols-2">
+        <div className="flex flex-col gap-2">
+          <label htmlFor="city" className="text-sm font-medium text-foreground">
+            City
+          </label>
+          <input
+            id="city"
+            type="text"
+            required
+            autoComplete="address-level2"
+            value={city}
+            onChange={(e) => setCity(e.target.value)}
+            className="rounded-lg border border-border bg-surface px-4 py-2.5 text-sm outline-none focus:border-accent"
+            placeholder="New York"
+          />
+        </div>
+
+        <div className="flex flex-col gap-2">
+          <label
+            htmlFor="state"
+            className="text-sm font-medium text-foreground"
+          >
+            State / Province
+          </label>
+          <input
+            id="state"
+            type="text"
+            required
+            autoComplete="address-level1"
+            value={state}
+            onChange={(e) => setState(e.target.value)}
+            className="rounded-lg border border-border bg-surface px-4 py-2.5 text-sm outline-none focus:border-accent"
+            placeholder="NY"
+          />
+        </div>
+      </div>
+
+      <div className="grid gap-4 sm:grid-cols-2">
+        <div className="flex flex-col gap-2">
+          <label
+            htmlFor="zipCode"
+            className="text-sm font-medium text-foreground"
+          >
+            ZIP / Postal code
+          </label>
+          <input
+            id="zipCode"
+            type="text"
+            required
+            autoComplete="postal-code"
+            value={zipCode}
+            onChange={(e) => setZipCode(e.target.value)}
+            className="rounded-lg border border-border bg-surface px-4 py-2.5 text-sm outline-none focus:border-accent"
+            placeholder="10001"
+          />
+        </div>
+
+        <div className="flex flex-col gap-2">
+          <label
+            htmlFor="country"
+            className="text-sm font-medium text-foreground"
+          >
+            Country
+          </label>
+          <input
+            id="country"
+            type="text"
+            required
+            autoComplete="country-name"
+            value={country}
+            onChange={(e) => setCountry(e.target.value)}
+            className="rounded-lg border border-border bg-surface px-4 py-2.5 text-sm outline-none focus:border-accent"
+            placeholder="United States"
+          />
+        </div>
       </div>
 
       <div className="flex flex-col gap-2">
