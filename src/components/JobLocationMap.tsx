@@ -105,7 +105,6 @@ function computePlottedLocations(locations: JobLocationPoint[]) {
   if (plottable.length === 0) {
     return {
       plotted: [] as PlottedPoint[],
-      unmapped: locations,
       maxCount: 0,
     };
   }
@@ -120,11 +119,8 @@ function computePlottedLocations(locations: JobLocationPoint[]) {
     jobs: entry.jobs ?? [],
   }));
 
-  const mappedNames = new Set(plottable.map((entry) => entry.location));
-
   return {
     plotted,
-    unmapped: locations.filter((entry) => !mappedNames.has(entry.location)),
     maxCount: maxJobCount,
   };
 }
@@ -191,7 +187,7 @@ export default function JobLocationMap({
   const [hoveredLocation, setHoveredLocation] = useState<string | null>(null);
   const [selectedLocation, setSelectedLocation] = useState<string | null>(null);
 
-  const { plotted, unmapped, maxCount } = computePlottedLocations(locations);
+  const { plotted, maxCount } = computePlottedLocations(locations);
   const locationByName = new Map(
     locations.map((entry) => [entry.location, entry]),
   );
@@ -231,7 +227,7 @@ export default function JobLocationMap({
           area to see the postings behind it.
           {plotted.length > 0
             ? ` ${totalMappedJobs.toLocaleString()} role${totalMappedJobs === 1 ? "" : "s"} mapped across ${plotted.length} location${plotted.length === 1 ? "" : "s"}.`
-            : " We could not map these locations yet — see the list below."}
+            : " Select a hiring area on the right to browse matching postings."}
         </p>
       </div>
 
@@ -392,37 +388,6 @@ export default function JobLocationMap({
                 })}
             </ul>
           </div>
-
-          {unmapped.length > 0 ? (
-            <div className="rounded-lg border border-dashed border-border bg-background px-3 py-3">
-              <h3 className="text-sm font-semibold text-foreground">
-                Not shown on map
-              </h3>
-              <p className="mt-1 text-xs text-muted">
-                Remote or broad regions are listed here instead of map pins.
-              </p>
-              <ul className="mt-2 space-y-1 text-sm text-foreground">
-                {unmapped.map((entry) => {
-                  const isSelected = selectedLocation === entry.location;
-
-                  return (
-                    <li key={entry.location}>
-                      <button
-                        type="button"
-                        onClick={() => selectLocation(entry.location)}
-                        className={`w-full rounded-md px-2 py-1 text-left transition-colors hover:bg-surface ${
-                          isSelected ? "bg-surface font-medium" : ""
-                        }`}
-                      >
-                        {entry.location} · {entry.jobCount} role
-                        {entry.jobCount === 1 ? "" : "s"}
-                      </button>
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
-          ) : null}
         </div>
       </div>
     </section>

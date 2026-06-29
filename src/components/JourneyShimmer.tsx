@@ -21,6 +21,16 @@ export function JourneySidebarShimmer({ count = 3 }: { count?: number }) {
 export function JourneyInsightsShimmer() {
   return (
     <div className="flex flex-col gap-6" role="status" aria-label="Loading skill insights">
+      <div className="rounded-xl border border-border bg-surface px-4 py-4 text-center shadow-sm sm:px-5">
+        <p className="text-sm font-medium text-foreground">
+          Loading your skill insights…
+        </p>
+        <p className="mt-1 text-sm text-muted">
+          Analyzing job postings in your target market. This usually takes a few
+          seconds.
+        </p>
+      </div>
+
       <section className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4" aria-hidden="true">
         {Array.from({ length: 4 }, (_, index) => (
           <article

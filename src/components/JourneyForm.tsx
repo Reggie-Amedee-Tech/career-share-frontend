@@ -110,11 +110,24 @@ export default function JourneyForm({
           {journey ? "Edit journey" : "Create a journey"}
         </h2>
         <p className="mt-1 text-sm text-muted">
-          Pick a curated role to maximize matching postings. Skill insights
-          analyze every related title in your focus location.
+          Give your journey a name, then choose a target market so we can match
+          jobs and generate skill insights for that role and location.
         </p>
+        <div
+          className="mt-3 rounded-lg border border-accent/30 bg-background px-3 py-3 sm:px-4"
+          role="note"
+        >
+          <p className="text-sm font-medium text-foreground">
+            Target market required
+          </p>
+          <p className="mt-1 text-sm text-muted">
+            Every journey needs a job title and state. We use that market to
+            find relevant postings and build your skill demand charts — you
+            cannot save without both.
+          </p>
+        </div>
         {prefill?.reason ? (
-          <p className="mt-2 rounded-lg border border-border bg-background px-3 py-2 text-sm text-muted">
+          <p className="mt-3 rounded-lg border border-border bg-background px-3 py-2 text-sm text-muted">
             {prefill.reason}
           </p>
         ) : null}
@@ -145,59 +158,89 @@ export default function JourneyForm({
           />
         </div>
 
-        <div className="flex flex-col gap-2">
-          <label
-            htmlFor="journey-title"
-            className="text-sm font-medium text-foreground"
-          >
-            Target job title
-          </label>
-          <select
-            id="journey-title"
-            required
-            value={targetJobRoleId}
-            onChange={(e) => setSelectedRoleId(e.target.value)}
-            disabled={rolesLoading || roles.length === 0}
-            className="rounded-lg border border-border bg-background px-4 py-2.5 text-sm outline-none focus:border-accent disabled:opacity-50"
-          >
-            {rolesLoading ? (
-              <option value="">Loading roles...</option>
-            ) : roles.length === 0 ? (
-              <option value="">No roles available</option>
-            ) : (
-              roles.map((role) => (
-                <option key={role.id} value={role.id}>
-                  {role.label}
-                </option>
-              ))
-            )}
-          </select>
-        </div>
+        <fieldset className="flex flex-col gap-4 rounded-xl border border-accent/40 bg-background/60 p-4">
+          <legend className="px-1 text-sm font-semibold text-foreground">
+            Target market
+            <span className="ml-1.5 font-normal text-muted">(required)</span>
+          </legend>
 
-        <div className="flex flex-col gap-2">
-          <label
-            htmlFor="journey-location"
-            className="text-sm font-medium text-foreground"
-          >
-            Target location (focus market)
-          </label>
-          <select
-            id="journey-location"
-            required
-            value={targetJobLocation}
-            onChange={(e) => setTargetJobLocation(e.target.value)}
-            className="rounded-lg border border-border bg-background px-4 py-2.5 text-sm outline-none focus:border-accent"
-          >
-            <option value="" disabled>
-              Select a state
-            </option>
-            {US_STATES.map((state) => (
-              <option key={state.code} value={state.name}>
-                {state.name}
+          <div className="flex flex-col gap-2">
+            <label
+              htmlFor="journey-title"
+              className="text-sm font-medium text-foreground"
+            >
+              Job title
+              <span className="text-accent" aria-hidden="true">
+                {" "}
+                *
+              </span>
+            </label>
+            <p className="text-xs text-muted">
+              The role you are targeting — used to match postings and skill
+              trends.
+            </p>
+            <select
+              id="journey-title"
+              required
+              value={targetJobRoleId}
+              onChange={(e) => setSelectedRoleId(e.target.value)}
+              disabled={rolesLoading || roles.length === 0}
+              className="rounded-lg border border-border bg-background px-4 py-2.5 text-sm outline-none focus:border-accent disabled:opacity-50"
+            >
+              {rolesLoading ? (
+                <option value="">Loading roles...</option>
+              ) : roles.length === 0 ? (
+                <option value="">No roles available</option>
+              ) : (
+                roles.map((role) => (
+                  <option key={role.id} value={role.id}>
+                    {role.label}
+                  </option>
+                ))
+              )}
+            </select>
+          </div>
+
+          <div className="flex flex-col gap-2">
+            <label
+              htmlFor="journey-location"
+              className="text-sm font-medium text-foreground"
+            >
+              State / focus market
+              <span className="text-accent" aria-hidden="true">
+                {" "}
+                *
+              </span>
+            </label>
+            <p className="text-xs text-muted">
+              Where you want to work — insights and charts are scoped to this
+              market only.
+            </p>
+            <select
+              id="journey-location"
+              required
+              value={targetJobLocation}
+              onChange={(e) => setTargetJobLocation(e.target.value)}
+              className={`rounded-lg border bg-background px-4 py-2.5 text-sm outline-none focus:border-accent ${
+                targetJobLocation ? "border-border" : "border-accent/60"
+              }`}
+            >
+              <option value="" disabled>
+                Select a state — required
               </option>
-            ))}
-          </select>
-        </div>
+              {US_STATES.map((state) => (
+                <option key={state.code} value={state.name}>
+                  {state.name}
+                </option>
+              ))}
+            </select>
+            {!targetJobLocation ? (
+              <p className="text-xs font-medium text-accent">
+                Choose a state to unlock skill insights for this journey.
+              </p>
+            ) : null}
+          </div>
+        </fieldset>
 
         <div className="grid gap-4 sm:grid-cols-2">
           <div className="flex flex-col gap-2">
